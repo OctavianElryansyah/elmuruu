@@ -1,0 +1,66 @@
+<html>
+  <body>
+    <!-- Pastikan ada kontainer untuk React -->
+    <div id="app"></div>
+    
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script type="text/jsx">
+      const domNode = document.getElementById('app');
+      const root = ReactDOM.createRoot(domNode);
+
+      function FormInput({ handleChange, handleSubmit }) {
+        return (
+          <form onSubmit={handleSubmit}>
+            <input 
+              type="text" 
+              placeholder="masukkan aktivitas" 
+              onChange={handleChange}
+            />
+            <button type="submit">Add</button>
+          </form>
+        );
+      }
+
+      function Content({ lists }){
+        return (
+          <ul>
+            {lists.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
+        );
+      }
+
+      function TodoApp(){
+        const [activity, setActivity] = React.useState("");
+        const [lists, setLists] = React.useState([]);
+
+        function handleChange(e) {
+          console.log(e.target.value);
+          setActivity(e.target.value);
+        }
+
+        function handleSubmit(e) {
+          e.preventDefault();
+          console.log(activity);
+          setLists([...lists, activity]);
+          setActivity("");
+        }
+
+        return (
+          <>
+            <FormInput handleChange={handleChange} handleSubmit={handleSubmit}/>
+            <Content lists={lists}/>
+            {/* Tombol untuk pindah ke index1.html */}
+            <button onClick={() => window.location.href = 'index1.html'}>Ke Halaman Bagus</button>
+          </>
+        );
+      }
+
+      root.render(<TodoApp />);
+    </script>
+  </body>
+</html>
